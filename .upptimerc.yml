@@ -33,16 +33,15 @@ status-website:
   publish: true
   cname: status.ticketplus.global
   theme: light
-  logoUrl: https://ticketing-assets.ticketplus.global/assets/logo-round-99223a5db65251ea5227316d3e30dbf03ac693920ffbca86b254f9508224754d.png
-  favicon: https://ticketing-assets.ticketplus.global/assets/logo-round-99223a5db65251ea5227316d3e30dbf03ac693920ffbca86b254f9508224754d.png
+  logoUrl: https://cdn-r2.ticketplus.global/landings/servicios-web/brand-preview/files/logo/tp-isotipo-fondo-blanco.png
+  favicon: https://cdn-r2.ticketplus.global/landings/servicios-web/brand-preview/files/logo/tp-isotipo-fondo-blanco.png
+  faviconSvg: https://cdn-r2.ticketplus.global/landings/servicios-web/brand-preview/files/logo/tp-isotipo-fondo-blanco.svg
   name: Ticketplus System Status
   introTitle: "**Ticketplus** is up and running"
-  introMessage: "Having trouble? Check the services below or email [soporte@ticketplus.cl](mailto:soporte@ticketplus.cl)."
+  introMessage: "Having trouble? Contact us via SAC, or if you are a producer your Contact Group."
   navbar:
     - title: Status
       href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
   links:
     - rel: stylesheet
       href: https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap
@@ -70,11 +69,9 @@ status-website:
         var el = document.createElement("div");
         el.className = "tp-hero " + cls;
         el.innerHTML =
-          '<div class="tp-hero__mark" aria-hidden="true"></div>' +
-          "<div><h1 class=\"tp-hero__title\">" +
+          '<div><h1 class="tp-hero__title">' +
           title +
-          "</h1><p class=\"tp-hero__lead\">Having trouble? Check the services below or email " +
-          '<a href="mailto:soporte@ticketplus.cl">soporte@ticketplus.cl</a>.</p></div>';
+          '</h1><p class="tp-hero__lead">Having trouble? Contact us via SAC, or if you are a producer your Contact Group.</p></div>';
         hdr.replaceWith(el);
         if (document.querySelector(".tp-legend")) return;
         var legend = document.createElement("ul");
@@ -108,7 +105,7 @@ status-website:
 i18n:
   liveStatus: Current status by service
   allSystemsOperational: All systems are operational
-  footer: This page is [open source]($REPO), powered by [Upptime](https://upptime.js.org)
+  footer: Status powered by [Upptime](https://upptime.js.org)
   up: Up
   down: Down
   degraded: Degraded
