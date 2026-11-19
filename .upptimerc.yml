@@ -32,11 +32,83 @@ sites:
 status-website:
   publish: true
   cname: status.ticketplus.global
-  logoUrl: https://avatars.githubusercontent.com/u/30219716?s=200&v=4
-  name: Ticketplus Global Status
-  introTitle: "**Ticketplus Global Status** is the uptime monitor and status page, powered entirely by Upptime and Github."
+  theme: light
+  logoUrl: https://ticketing-assets.ticketplus.global/assets/logo-round-99223a5db65251ea5227316d3e30dbf03ac693920ffbca86b254f9508224754d.png
+  favicon: https://ticketing-assets.ticketplus.global/assets/logo-round-99223a5db65251ea5227316d3e30dbf03ac693920ffbca86b254f9508224754d.png
+  name: Ticketplus System Status
+  introTitle: "**Ticketplus** is up and running"
+  introMessage: "Having trouble? Check the services below or email [soporte@ticketplus.cl](mailto:soporte@ticketplus.cl)."
   navbar:
     - title: Status
       href: /
     - title: GitHub
       href: https://github.com/$OWNER/$REPO
+  links:
+    - rel: stylesheet
+      href: https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap
+    - rel: stylesheet
+      href: /ticketplus-status.css
+  js: |
+    (function () {
+      function paint(sites) {
+        var down = 0, degraded = 0, i;
+        for (i = 0; i < sites.length; i++) {
+          if (sites[i].status === "down") down++;
+          else if (sites[i].status === "degraded") degraded++;
+        }
+        var cls = "tp-hero--ok";
+        var title = "<strong>Ticketplus</strong> is up and running";
+        if (down) {
+          cls = "tp-hero--down";
+          title = "<strong>Ticketplus</strong> has an outage";
+        } else if (degraded) {
+          cls = "tp-hero--degraded";
+          title = "<strong>Ticketplus</strong> has degraded performance";
+        }
+        var hdr = document.querySelector("main header");
+        if (!hdr) return;
+        var el = document.createElement("div");
+        el.className = "tp-hero " + cls;
+        el.innerHTML =
+          '<div class="tp-hero__mark" aria-hidden="true"></div>' +
+          "<div><h1 class=\"tp-hero__title\">" +
+          title +
+          "</h1><p class=\"tp-hero__lead\">Having trouble? Check the services below or email " +
+          '<a href="mailto:soporte@ticketplus.cl">soporte@ticketplus.cl</a>.</p></div>';
+        hdr.replaceWith(el);
+        if (document.querySelector(".tp-legend")) return;
+        var legend = document.createElement("ul");
+        legend.className = "tp-legend";
+        legend.setAttribute("aria-label", "Status legend");
+        legend.innerHTML =
+          '<li><i class="ok"></i> No issues</li>' +
+          '<li><i class="maint"></i> Maintenance</li>' +
+          '<li><i class="degraded"></i> Degraded</li>' +
+          '<li><i class="down"></i> Outage</li>';
+        var live = document.querySelector(".f.changed");
+        if (live && live.parentNode) live.parentNode.insertBefore(legend, live);
+      }
+      function run() {
+        fetch(
+          "https://raw.githubusercontent.com/ticketplushq/status/master/history/summary.json"
+        )
+          .then(function (r) {
+            return r.json();
+          })
+          .then(paint)
+          .catch(function () {});
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", run);
+      } else {
+        run();
+      }
+    })();
+
+i18n:
+  liveStatus: Current status by service
+  allSystemsOperational: All systems are operational
+  footer: This page is [open source]($REPO), powered by [Upptime](https://upptime.js.org)
+  up: Up
+  down: Down
+  degraded: Degraded
